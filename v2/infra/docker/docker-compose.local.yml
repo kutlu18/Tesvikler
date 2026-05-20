@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: tesvikler-v2-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: tesvikler_v2
+    volumes:
+      - mongo_data:/data/db
+      - ../mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: tesvikler-v2-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:

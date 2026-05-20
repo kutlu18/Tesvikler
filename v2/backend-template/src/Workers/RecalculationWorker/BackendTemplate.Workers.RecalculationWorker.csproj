@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+  <PropertyGroup>
+    <RootNamespace>BackendTemplate.Workers.RecalculationWorker</RootNamespace>
+    <AssemblyName>BackendTemplate.Workers.RecalculationWorker</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\BackendTemplate.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BackendTemplate.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

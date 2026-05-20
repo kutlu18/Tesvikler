@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@v2/shared-types": ["packages/shared-types/src"],
+      "@v2/db-core": ["packages/db-core/src"],
+      "@v2/config": ["packages/config/src"]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "tesvikler-v2-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@10.8.2",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:api",
+    "dev:crm-ui": "npm --workspace @v2/crm-ui run dev",
+    "dev:incentive-ui": "npm --workspace @v2/incentive-ui run dev",
+    "dev:api": "npm --workspace @v2/api-gateway run dev",
+    "dev:eligibility": "npm --workspace @v2/eligibility-engine run dev",
+    "dev:sync": "npm --workspace @v2/crm-sync-worker run dev",
+    "build": "npm run -ws build",
+    "typecheck": "npm run -ws typecheck"
+  }
+}

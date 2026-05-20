@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>BackendTemplate.Application</RootNamespace>
+    <AssemblyName>BackendTemplate.Application</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\BackendTemplate.Domain.csproj" />
+    <ProjectReference Include="..\Shared\BackendTemplate.Shared.csproj" />
+  </ItemGroup>
+</Project>

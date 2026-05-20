@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <RootNamespace>BackendTemplate.Api</RootNamespace>
+    <AssemblyName>BackendTemplate.Api</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\BackendTemplate.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\BackendTemplate.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared\BackendTemplate.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
+  </ItemGroup>
+</Project>
