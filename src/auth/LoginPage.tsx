@@ -71,9 +71,9 @@ export default function LoginPage() {
           <Link to="/auth/register" className="block font-medium text-blue-700 hover:text-blue-800">
             Hesabiniz yok mu? Kayit olun
           </Link>
-          <button type="button" onClick={() => setError("Sifremi unuttum akisi ilk surumde placeholder olarak birakildi.")} className="block text-slate-500 hover:text-slate-700">
+          <Link to="/auth/forgot-password" className="block text-slate-500 hover:text-slate-700">
             Sifremi unuttum
-          </button>
+          </Link>
           <button type="button" onClick={() => void continueAsGuest()} className="block text-slate-500 hover:text-slate-700">
             Misafir olarak devam et
           </button>

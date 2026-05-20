@@ -129,6 +129,17 @@ const readGuestFlag = () => {
   return window.localStorage.getItem(guestModeStorageKey) === "true";
 };
 
+const getAuthRedirectUrl = (path: string) => {
+  if (typeof window === "undefined") {
+    return path;
+  }
+
+  const basePath = import.meta.env.BASE_URL === "/" ? "" : import.meta.env.BASE_URL.replace(/\/$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+
+  return `${window.location.origin}${basePath}${normalizedPath}`;
+};
+
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 interface AuthProviderProps {
@@ -395,6 +406,54 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const requestPasswordReset = async (email: string) => {
+    if (!isSupabaseConfigured) {
+      throw new Error("Sifre sifirlama maili icin Supabase Auth yapilandirmasi gerekli.");
+    }
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      throw new Error("Auth servisi su anda kullanilamiyor.");
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: getAuthRedirectUrl("/auth/update-password"),
+    });
+
+    if (error) {
+      throw error;
+    }
+  };
+
+  const updatePassword = async (password: string) => {
+    if (!isSupabaseConfigured) {
+      throw new Error("Sifre guncelleme icin Supabase Auth yapilandirmasi gerekli.");
+    }
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      throw new Error("Auth servisi su anda kullanilamiyor.");
+    }
+
+    const { data, error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      throw error;
+    }
+
+    if (data.user) {
+      setUser(data.user);
+      setProfile(await getMyProfile(data.user.id));
+      await recordActivity({
+        userId: data.user.id,
+        actionType: "password_reset",
+        module: "auth",
+        entityType: "user",
+        entityId: data.user.id,
+        description: "Kullanici sifresini sifirladi.",
+      });
+    }
+  };
+
   const refreshProfile = async () => {
     if (!user) {
       setProfile(null);
@@ -471,6 +530,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       signIn,
       signUp,
       signOut,
+      requestPasswordReset,
+      updatePassword,
       login: signIn,
       register: signUp,
       logout: signOut,

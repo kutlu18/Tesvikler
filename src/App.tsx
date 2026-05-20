@@ -2,8 +2,10 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import AuthenticatedOnlyRoute from "./auth/AuthenticatedOnlyRoute";
 import AuthLandingPage from "./auth/AuthLandingPage";
 import GuestAllowedRoute from "./auth/GuestAllowedRoute";
+import ForgotPasswordPage from "./auth/ForgotPasswordPage";
 import LoginPage from "./auth/LoginPage";
 import RegisterPage from "./auth/RegisterPage";
+import UpdatePasswordPage from "./auth/UpdatePasswordPage";
 import { moduleConfigs } from "./config/modules";
 import AppLayout from "./layout/AppLayout";
 import PublicLayout from "./layout/PublicLayout";
@@ -18,6 +20,8 @@ export default function App() {
       <Route path="/auth" element={<PublicLayout><AuthLandingPage /></PublicLayout>} />
       <Route path="/auth/login" element={<PublicLayout><LoginPage /></PublicLayout>} />
       <Route path="/auth/register" element={<PublicLayout><RegisterPage /></PublicLayout>} />
+      <Route path="/auth/forgot-password" element={<PublicLayout><ForgotPasswordPage /></PublicLayout>} />
+      <Route path="/auth/update-password" element={<PublicLayout><UpdatePasswordPage /></PublicLayout>} />
 
       <Route
         path="/app"

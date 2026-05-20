@@ -14,7 +14,7 @@ export type ActivityActionType =
   | "analysis_note"
   | "analysis_report_placeholder"
   | "profile_update"
-  | "password_reset_placeholder";
+  | "password_reset";
 
 export interface ActivityLogRecord {
   id: string;
