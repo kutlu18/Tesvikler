@@ -50,6 +50,28 @@ Mevcut tablolar:
 
 RLS politikalarinda kullanici sadece kendi verisine erisir.
 
+## Canli Yayin
+
+GitHub Pages workflow'u `main` dalina push gelince production build alir ve `dist` klasorunu yayinlar.
+
+Beklenen canli adres:
+
+```text
+https://kutlu18.github.io/Tesvikler/
+```
+
+Supabase Auth icin Dashboard > Authentication > URL Configuration alaninda su degerler tanimlanmalidir:
+
+```text
+Site URL: https://kutlu18.github.io/Tesvikler/
+Redirect URLs:
+https://kutlu18.github.io/Tesvikler/**
+http://127.0.0.1:5173/**
+http://localhost:5173/**
+```
+
+GitHub repo ayarlarinda Pages kaynagi `GitHub Actions` olmalidir.
+
 ## Test ve UAT
 
 Is analisti hesaplama test kosucusu:
@@ -80,4 +102,3 @@ Ozet:
 - `fix/*`: hata duzeltme
 - `db/*`: Supabase migration
 - `docs/*`: dokumantasyon
-
