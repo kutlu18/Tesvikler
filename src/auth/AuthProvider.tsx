@@ -180,7 +180,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }
         }
 
-        const { data: subscription } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+        const { data: subscription } = supabase.auth.onAuthStateChange(async (event, nextSession) => {
           setSession(nextSession);
           setUser(nextSession?.user ?? null);
 
@@ -189,7 +189,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
             if (typeof window !== "undefined") {
               window.localStorage.removeItem(guestModeStorageKey);
             }
-            await touchLastLogin(nextSession.user.id);
+            if (event !== "PASSWORD_RECOVERY") {
+              await touchLastLogin(nextSession.user.id);
+            }
             setProfile(await getMyProfile(nextSession.user.id));
           } else {
             setProfile(null);
@@ -441,8 +443,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     if (data.user) {
-      setUser(data.user);
-      setProfile(await getMyProfile(data.user.id));
       await recordActivity({
         userId: data.user.id,
         actionType: "password_reset",
@@ -452,6 +452,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         description: "Kullanici sifresini sifirladi.",
       });
     }
+
+    await supabase.auth.signOut();
+    writeMockSession(null);
+    setSession(null);
+    setUser(null);
+    setProfile(null);
+    setIsGuest(false);
   };
 
   const refreshProfile = async () => {

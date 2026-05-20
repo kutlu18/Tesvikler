@@ -29,8 +29,15 @@ export default function UpdatePasswordPage() {
     setIsSubmitting(true);
     try {
       await updatePassword(password);
-      setSuccess("Sifreniz guncellendi. Yonlendiriliyorsunuz...");
-      window.setTimeout(() => navigate("/app", { replace: true }), 900);
+      setSuccess("Sifreniz guncellendi. Yeni sifrenizle giris yapabilirsiniz.");
+      window.setTimeout(
+        () =>
+          navigate("/auth/login", {
+            replace: true,
+            state: { message: "Sifreniz guncellendi. Lutfen yeni sifrenizle giris yapin." },
+          }),
+        900
+      );
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Sifre guncellenemedi. Baglanti suresi dolmus olabilir.");
     } finally {

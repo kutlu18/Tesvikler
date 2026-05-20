@@ -6,6 +6,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, continueAsGuest } = useAuth();
+  const locationState = location.state as { from?: string; message?: string } | null;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +29,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
     try {
       await login(email, password);
-      navigate((location.state as { from?: string } | null)?.from ?? "/app", { replace: true });
+      navigate(locationState?.from ?? "/app", { replace: true });
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "E-posta veya sifre hatali.");
     } finally {
@@ -51,6 +52,7 @@ export default function LoginPage() {
         <p className="mt-2 text-sm text-slate-600">Kayitli hesabinizla platforma giris yapin.</p>
 
         {error ? <div className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-900">{error}</div> : null}
+        {locationState?.message ? <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">{locationState.message}</div> : null}
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <label className="block text-sm">
